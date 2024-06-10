@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class = 'logo_img'>
+        <img src="{% static 'img/YouTube_Logo.png' %}" alt="">
+    </div>
+    <form id = "get_info_form" action="" method="post">
+        {% csrf_token %}
+        {{form.title}}
+        <button type = "submit"> Download </button>
+    </form>
+    {% if Error %}
+        <h2>{{Error}}</h2>
+    {% endif%}
+    {% if video_data %}
+
+        <form id = "download_form" action="download-video/" method="POST">
+            {% csrf_token %}
+            <h2>{{vido_data.title}}</h2>
+            <img src = '{{video_data.thumbnail}}' alt ="">
+            <p>Choose video quality</p>
+            <div class = "download_video">
+                <select name="select_res" id="">
+                    {% for  k,format in video_data.formats %}
+                    <option value=" {{ k }} ">{{format}}</option>
+                    {%endfor%}
+                    <input type="hidden" name = "url" value=" {{video_data.url}} ">
+                    <button type="submit">Download</button>
+                </select>
+            </div>
+        </form>
+
+    {% endif%}
+{% endblock %}
