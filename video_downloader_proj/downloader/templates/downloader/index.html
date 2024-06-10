@@ -32,6 +32,8 @@
             </div>
         </form>
         {% endif%}
-        <p><a href="">Sign up</a>, and you can save videos and download several at once.</p>
+        {%if not user.is_authenticated%}
+            <p><a href="{%url 'user:login'%}">Sign in</a>, and you can save videos and download several at once.</p>
+        {%endif%}
     </div>
 {% endblock %}

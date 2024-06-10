@@ -5,5 +5,5 @@ app_name = 'downloader'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('download_viedo', views.download_video, name='download'),
+    path('download_video/', views.download_video, name='download'),
 ]

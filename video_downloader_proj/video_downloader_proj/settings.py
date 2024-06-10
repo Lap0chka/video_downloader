@@ -29,13 +29,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
     'downloader',
 ]
 
@@ -122,4 +122,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH
 
 AUTH_USER_MODEL = 'users.User'
-LOGOUT_REDIRECT_URL = 'user:login'
+LOGIN_URL = 'user:login'
+LOGOUT_URL = 'user:logout'
+LOGOUT_REDIRECT_URL = 'downloader:index'
+LOGIN_REDIRECT_URL = 'downloader:index'
+
+# email settings
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'your.blog.and.posts@gmail.com'
+EMAIL_HOST_PASSWORD = 'uxmf prqn puia gdpp'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
