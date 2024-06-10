@@ -1,35 +1,37 @@
 {% extends "base.html" %}
 {%load static%}
 {% load custom_filters %}
-{%block title%}Downloader{%endblock%}
-{% block content %}
-    <div class = 'logo_img'>
-        <img src="{% static 'img/YouTube_Logo.png' %}" alt="">
-    </div>
-    <form id = "get_info_form" action="" method="post">
-        {% csrf_token %}
-        {{form.title}}
-        <button type = "submit"> Download </button>
-    </form>
 
-    {% if video_data %}
-        <form id = "download_form" action="{% url 'downloader:download' %}" method="POST">
+{%block title%}Downloader{%endblock%}
+
+{% block content %}
+    <div class='container mt-5'>
+        <div class='logo_img'>
+            <img src="{% static 'img/YouTube_Logo.png' %}" alt="">
+        </div>
+        <form id="get_info_form" action="" method="post">
+            {% csrf_token %}
+            {{form.title}}
+            <button type="submit"> Download</button>
+        </form>
+
+        {% if video_data %}
+        <form id="download_form" action="{% url 'downloader:download' %}" method="POST">
             {% csrf_token %}
             <h2>{{vido_data.title}}</h2>
-            <img src = '{{video_data.thumbnail}}' alt ="">
+            <img src='{{video_data.thumbnail}}' alt="">
             <p>Choose video quality</p>
-            <div class = "download_video">
+            <div class="download_video">
                 <select name="format_video" id="">
-                    {% for format, resolution in video_data.video_formats.items %}
-                        {% with resolution|custom_split as resolution %}
-                            <option value=" {{ resolution.0}} ">{{format}} - {{resolution.1}}</option>
-                        {% endwith %}
+                    {% for format_note, format_id in video_data.video_formats.items %}
+                    <option value=" {{ format_id}} ">{{format_note}}</option>
                     {%endfor%}
-                    <input type="hidden" name = "url" value=" {{video_data.url}} ">
+                    <input type="hidden" name="url" value=" {{video_data.url}} ">
                     <button type="submit">Download</button>
                 </select>
             </div>
         </form>
-
-    {% endif%}
+        {% endif%}
+        <p><a href="">Sign up</a>, and you can save videos and download several at once.</p>
+    </div>
 {% endblock %}

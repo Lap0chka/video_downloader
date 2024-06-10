@@ -2,7 +2,7 @@ import yt_dlp
 
 
 def get_format(url: str) -> dict:
-    """We don't download video. We gather format video info"""
+    """Gather format video info"""
     video_formats = {}
     options = {
         "simulate": True,
@@ -13,12 +13,19 @@ def get_format(url: str) -> dict:
     v_formats = video.get("formats", None)
 
     for v_format in v_formats:
+        format_id = v_format['format_id']
+        resolution = v_format.get('resolution', None)
+        audio_channels = v_format.get('audio_channels', None)
+        print(v_format)
 
-        resolution = v_format['format']
-        format_video = v_format['video_ext']
-        if format_video == 'none':
-            format_video = 'audio'
-        video_formats[format_video] = resolution
+        if v_format['video_ext'] == 'mp4' and resolution:
+            if audio_channels:
+                video_formats[resolution] = format_id
+            resolution = f'Only video - {resolution}'
+            video_formats[resolution] = format_id
+
+        if 'audio ' not in video_formats and resolution == 'audio only' and v_format['audio_ext'] == 'm4a':
+            video_formats['audio'] = format_id
 
     video_data = {
         "url": url,
@@ -31,7 +38,6 @@ def get_format(url: str) -> dict:
 
 
 def get_video(url, video_format):
-
     options = {
         "format": video_format
     }
@@ -41,5 +47,3 @@ def get_video(url, video_format):
     file_name = ydl.prepare_filename(video)
 
     return file_name
-
-
