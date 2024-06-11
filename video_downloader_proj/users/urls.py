@@ -8,5 +8,7 @@ urlpatterns = [
     path("password_reset/", views.MyPasswordResetView.as_view(), name='password_reset'),
     path("", include("django.contrib.auth.urls")),
     path('register/', login_required(views.RegisterUser.as_view()), name='register'),
+    path('send_email/', views.send_user_email, name='send_email'),
+    path('confirm_email/<str:token>', views.confirm_email, name='confirm_email')
 
 ]

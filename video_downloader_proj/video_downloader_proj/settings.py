@@ -136,3 +136,25 @@ EMAIL_HOST_PASSWORD = 'uxmf prqn puia gdpp'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+# Celery
+
+if DEBUG:
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+else:
+    CELERY_BROKER_URL = 'redis://redis:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+
+# Caches
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://localhost:6379/0'
+    }
+}
+
+# Redis save token for send email
+
+MYVARRIABLE_USER_CONFIRMATION_KEY = "user_confirmation_{token}"
+MYVARRIABLE_USER_TIMEOUT_KEY = 3600
