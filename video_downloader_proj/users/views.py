@@ -17,23 +17,22 @@ class RegisterUser(CreateView):
     model = User
     template_name = 'users/register.html'
     form_class = RegisterUserForm
-    success_url = 'user:login'
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.success(self.request, 'You have registered successfully. Please log in.')
-        send_user_email(self.request)
+        user = form.instance
+        send_user_email(self.request, user)
         return response
 
 
-def send_user_email(request):
-    user = request.user
+def send_user_email(request, user):
     token = uuid.uuid4().hex
     base_url = request.build_absolute_uri(reverse_lazy('confirm_email', args=[token]))
     send_email_verification.delay(user.username, user.email, base_url, token)
     message = 'Email has been sent successfully'
     messages.success(request, message)
-    return redirect(reverse_lazy('downloader:index'))
 
 
 def confirm_email(reqeust, token):
@@ -46,7 +45,7 @@ def confirm_email(reqeust, token):
         user.is_email_verification = True
         user.save()
         messages.success(reqeust, 'You have confirm your email successfully.')
-        return redirect(to=reverse_lazy('blog:index'))
+        return redirect(to=reverse_lazy('downloader:index'))
     else:
         return redirect(to=reverse_lazy('user:login'))
 

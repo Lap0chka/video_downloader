@@ -6,6 +6,23 @@
 
 {% block content %}
     <div class='container mt-5'>
+         {% if messages or form.non_field_errors %}
+            <div class="alert
+                 {% if messages %} alert-success {% else %} alert-warning {%endif%}
+                 alert-dismissible fade show" role="alert"
+                 style="margin-top: 50px;">
+                {% if messages%}
+                {% for i in messages %}
+                {{ i }}
+                {%endfor%}
+                {% else %}
+                {{form.non_field_errors}}
+                {%endif%}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
         <div class='logo_img'>
             <img src="{% static 'img/YouTube_Logo.png' %}" alt="">
         </div>
