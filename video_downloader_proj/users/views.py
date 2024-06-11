@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 from django.contrib import messages
 from .forms import RegisterUserForm
@@ -21,12 +21,12 @@ class RegisterUser(CreateView):
 
 
 class MyPasswordResetView(PasswordResetView):
-    success_url = 'user:password_reset_done'
+    success_url = reverse_lazy('password_reset_done')
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
         user = User.objects.filter(email=email).first()
         if not user:
             messages.error(self.request, 'This email is not registered. Try again')
-            return redirect(reverse('user:password_reset'))
+            return redirect(reverse('password_reset'))
         return super().form_valid(form)

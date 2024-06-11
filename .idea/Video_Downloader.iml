@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv_downloader" />
       <excludeFolder url="file://$MODULE_DIR$/video_downloader_proj/users/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/video_downloader_proj/downloader/migrations" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

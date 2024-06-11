@@ -122,13 +122,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH
 
 AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = 'user:login'
-LOGOUT_URL = 'user:logout'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'downloader:index'
 LOGIN_REDIRECT_URL = 'downloader:index'
 
 # email settings
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'your.blog.and.posts@gmail.com'
 EMAIL_HOST_PASSWORD = 'uxmf prqn puia gdpp'

@@ -23,7 +23,7 @@
                         <a class="nav-link" href="#">My Videos</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{% url 'user:logout' %}" method="post">
+                        <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
                             <a class="nav-link" type="submit"><button  type="submit">Logout</button></a>
                         </form>
