@@ -1,7 +1,7 @@
 import os
 
 from django.http import FileResponse
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 from .forms import LinkTitleForm
 from .additional_func import get_format, get_video
 
