@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from downloader.models import VideoModel
+
+
+@admin.register(VideoModel)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user']

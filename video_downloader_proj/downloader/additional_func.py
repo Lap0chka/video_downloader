@@ -1,5 +1,7 @@
 import yt_dlp
 
+from downloader.models import VideoModel
+
 
 def get_format(url: str) -> dict:
     """Gather format video info"""
@@ -27,10 +29,13 @@ def get_format(url: str) -> dict:
         if 'audio ' not in video_formats and resolution == 'audio only' and v_format['audio_ext'] == 'm4a':
             video_formats['audio'] = format_id
 
+    title = video.get("title", None)
+    thumbnail = video.get("thumbnail", None)
+
     video_data = {
         "url": url,
-        "thumbnail": video.get("thumbnail", None),
-        "title": video.get("title", None),
+        "thumbnail": thumbnail,
+        "title": title,
         "video_formats": video_formats
     }
 
