@@ -5,6 +5,16 @@ from .models import User
 
 
 class RegisterUserForm(UserCreationForm):
+    """
+    A form that extends UserCreationForm to register a new user with additional validation for email uniqueness.
+
+    Attributes:
+        Meta (class): Inner class that defines metadata options for the form, including the model and fields to be included.
+
+    Methods:
+        clean(self): Custom validation method to check if the provided email is already in use by another user.
+    """
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')

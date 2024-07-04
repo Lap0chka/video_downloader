@@ -14,6 +14,13 @@ from .models import User
 
 
 class RegisterUser(CreateView):
+    """
+    A view class that handles the registration of a new user by extending Django's CreateView.
+    Upon successful registration, it displays a success message, sends a verification email, and redirects to the login page.
+
+    Methods:
+        form_valid(self, form): Overrides the form_valid method to display a success message, send a verification email, and redirect to the login page.
+    """
     model = User
     template_name = 'users/register.html'
     form_class = RegisterUserForm
@@ -28,6 +35,12 @@ class RegisterUser(CreateView):
 
 
 def send_user_email(request, user):
+    """
+    Sends an email verification link to the user for confirming their email address asynchronously.
+
+    Returns:
+    None
+    """
     token = uuid.uuid4().hex
     base_url = request.build_absolute_uri(reverse_lazy('confirm_email', args=[token]))
     send_email_verification.delay(user.username, user.email, base_url, token)
@@ -36,6 +49,12 @@ def send_user_email(request, user):
 
 
 def confirm_email(reqeust, token):
+    """
+    Confirm the user's email address based on the provided token.
+
+    Returns:
+        HttpResponseRedirect: Redirects to the appropriate page based on the confirmation status.
+    """
     redis_key = settings.MYVARRIABLE_USER_CONFIRMATION_KEY.format(token=token)
     user_info = cache.get(redis_key) or {}
 
@@ -51,6 +70,17 @@ def confirm_email(reqeust, token):
 
 
 class MyPasswordResetView(PasswordResetView):
+    """
+    Custom password reset view that extends Django's PasswordResetView.
+    On successful form submission, it checks if the provided email is registered in the User model.
+    If the email is not registered, it displays an error message and redirects to the password reset page.
+    Otherwise, it proceeds with the default behavior of Django's PasswordResetView.
+
+    Methods:
+        form_valid(self, form): Overrides the form_valid method of PasswordResetView.
+                                Checks if the email is registered and displays an error message if not.
+                                Returns the super class's form_valid method if the email is registered.
+    """
     success_url = reverse_lazy('password_reset_done')
 
     def form_valid(self, form):

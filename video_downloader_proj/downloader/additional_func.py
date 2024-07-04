@@ -4,7 +4,15 @@ from downloader.models import VideoModel
 
 
 def get_format(url: str) -> dict:
-    """Gather format video info"""
+    """
+    Gather format video info
+
+    Args:
+        url (str): The URL of the video to extract format information from.
+
+    Returns:
+        dict: A dictionary containing the URL, thumbnail, title, and video formats of the extracted video information.
+    """
     video_formats = {}
     options = {
         "simulate": True,
@@ -43,6 +51,19 @@ def get_format(url: str) -> dict:
 
 
 def get_video(url, video_format):
+    """
+    Download a video from a given URL in the specified format.
+
+    Parameters:
+        url (str): The URL of the video to download.
+        video_format (str): The format in which the video should be downloaded.
+
+    Returns:
+        str: The file name of the downloaded video.
+
+    Example:
+        get_video("https://www.youtube.com/watch?v=abc123", "mp4")
+    """
     options = {
         "format": video_format
     }

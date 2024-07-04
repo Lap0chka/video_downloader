@@ -9,6 +9,18 @@ from .models import VideoModel
 
 
 def index(request):
+    """
+    View function for rendering the index page.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request object.
+
+    Returns:
+    - HttpResponse: The HTTP response object with the rendered index page template.
+
+    Template:
+    - 'downloader/index.html'
+    """
     videos = VideoModel.objects.all()
     if request.method == 'POST':
         form = LinkTitleForm(request.POST)
@@ -29,6 +41,16 @@ def index(request):
 
 
 def download_video(request):
+    """
+    Download a video from the given URL in the specified format and return it as a FileResponse.
+
+    Parameters:
+    - request (HttpRequest): The HTTP request object.
+
+    Returns:
+    - FileResponse: The video file as a FileResponse object.
+
+    """
     if request.method == 'POST':
         url = request.POST.get('url').strip()
         format_video = request.POST.get("format_video").strip()
@@ -42,5 +64,14 @@ def download_video(request):
 
 @login_required
 def video_post(request, video_pk, video_slug):
+    """
+    View function for rendering a single video post.
+
+    Returns:
+    - HttpResponse: The HTTP response object with the rendered video post template containing the specified video post.
+
+    Template:
+    - 'downloader/video_post.html'
+    """
     post = get_object_or_404(VideoModel, pk=video_pk, slug=video_slug)
     return render(request, 'downloader/video_post.html', {'post': post})

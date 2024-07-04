@@ -6,6 +6,12 @@ from users.models import User
 
 
 class VideoModel(models.Model):
+    """
+    A model to represent a video with title, slug, user, URL, thumbnail, video formats, and add time.
+
+    Methods:
+        get_absolute_url: A method to get the absolute URL of the video.
+    """
     title = models.CharField(max_length=128)
     slug = models.SlugField(max_length=256, unique=True, db_index=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -20,8 +26,8 @@ class VideoModel(models.Model):
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
-
-        self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.title)
         super().save()
 
     class Meta:
